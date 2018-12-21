@@ -17,6 +17,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Switch>
+            {/* 首页 */}
             <Route exact path='/' render={()=> {
               return '首页';
             }}></Route>
