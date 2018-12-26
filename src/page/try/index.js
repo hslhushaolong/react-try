@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router,Route, Prompt, Link, Switch} from 'react-router-dom';
+import { Route, Prompt, Link} from 'react-router-dom';
 const Topic = ({match}) => {
     return <div><h3>{match.params.topicId}</h3></div>
   };
@@ -13,7 +13,7 @@ class TryComponent extends Component {
 
     render() {
         const { match } = this.props;
-        console.log(this.props);
+        console.log(`${match.url}/:topicId`);
         return  (<div>
               <h3>我是列表</h3>
                 {/* <Prompt message='你确定要离开页面吗？' /> */}
