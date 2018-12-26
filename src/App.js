@@ -26,18 +26,31 @@ class App extends Component {
     props.history.push(path)
   }
 
+  // 用于确认导航的功能, 配合Prompt, 默认
+  getConfirmation = (message, callback) => {
+    const allowTransition = window.confirm(message)
+    callback(allowTransition);
+  }
+
   render() {
+    const flag = 'pushState' in window.history
+    console.log(flag);
+
+  // forceRefresh: bool
+  // 如果为 true ，在导航的过程中整个页面将会刷新。
+  // 一般情况下，只有在不支持 HTML5 history API 的浏览器中使用此功能。
+
     return (
       <Provider store={store}>
-        <Router>
+        <Router getUserConfirmation={this.getConfirmation} forceRefresh={!flag} >
           <Switch>
             {/* 首页 */}
             <Route exact path='/' render={(props)=> {
               // return <Link to='/shop/1212'>跳转</Link>; // this.props.match.id
               return <Link to={{
-                pathname: '/shop',
+                pathname: '/try',
                 // search: '?dssss=12',
-                state: { data: ['sdsdsdss']}
+                // state: { data: ['sdsdsdss']}
               }} replace={false}>跳转</Link>;
               // return <span onClick={() => this.onClickPush(props)}>跳转</span>
             }}></Route>
@@ -46,14 +59,18 @@ class App extends Component {
               console.log(props)
               return 'shop'
             }}></Route> */}
-            <Route exact path='/shop' component={TryComponent}></Route>
-            <Route path='/log' render={()=>{
+            <Route exact path='/try' component={TryComponent}></Route>
+            <Route exact path='/log' render={()=>{
               return 'log';
+            }}></Route>
+            <Route exact path='/shop/two' render={(props)=>{
+              console.log(props);
+              return '二级路由页面';
             }}></Route>
             <Route exact path='/error' render={()=>{
               return 'error';
             }}></Route>
-            <Redirect from='*' to='/error' />
+            {/* <Redirect from='*' to='/error' /> */}
               {/* <Route path='/shop' render={(props)=> {
               console.log(props)
               return 'shop'
