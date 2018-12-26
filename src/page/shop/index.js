@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ADD, DEL } from '../../redux/action';
 // import PropTypes from 'prop-types';
 
-class ComponentName extends React.Component {
+class ShopComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,10 +48,9 @@ class ComponentName extends React.Component {
     }
 }
 
-// ComponentName.propTypes = {};
 function mapStateToProps (state ) {
     return {
         addNum: state.addNum
     }
 }
-export default connect(mapStateToProps)(ComponentName);
+export default connect(mapStateToProps)(ShopComponent);
