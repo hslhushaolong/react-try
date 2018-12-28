@@ -1,37 +1,48 @@
 import React, { Component } from 'react';
-import { Route, Prompt, Link} from 'react-router-dom';
-const Topic = ({match}) => {
-    return <div><h3>{match.params.topicId}</h3></div>
-  };
-  
-class TryComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    }
+import { BrowserRouter as Router, Route, Prompt, NavLink, Link } from 'react-router-dom';
 
-    render() {
-        const { match } = this.props;
-        console.log(`${match.url}/:topicId`);
-        return  (<div>
-              <h3>我是列表</h3>
-                {/* <Prompt message='你确定要离开页面吗？' /> */}
-                练习
-              <ul>
-                <li><Link to={`${match.url}/react`}>a</Link></li>
-                <li><Link to={`${match.url}/router`}>b</Link></li>
-                <li><Link to={`${match.url}/redux`}>c</Link></li>
-              </ul>
-              <hr/>
-              <Route exact path={`${match.url}/:topicId`} render={(match) => {
-                  console.log(match.params.topicId)
-                  return 'topicId';
-              }}/>
-            </div>
-        )
+class Topics extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
     }
     
-}
+    render () {
+        const { match } = this.props;
+        console.log(this.props);
+            return (
+              <Router basename={match.url}>
+              <div>
+                <h2>Topics</h2>
+                {/* <Prompt when={true} message='你确定要跳转页面吗' /> */}
+                {/* <Prompt message={location => {
+                    return `你确定要跳转到${location.pathname}吗？`;
+                    }} /> */}
 
-export default TryComponent;
+                <ul>
+                  <li>
+                    <Link replace to={`/rendering`} >Rendering with React</Link>
+                  </li>
+                  <li>
+                    <NavLink activeStyle={{ color: 'red'}} to={`/components`}>Components</NavLink>
+                  </li>
+                  <li>
+                    <NavLink activeStyle={{ color: 'red'}} to={`/props-v-state`}>Props v. State</NavLink>
+                  </li>
+                </ul>
+          
+                <Route path={`/:topicId`} render={(props) => {
+                    return <div>{props.match.params.topicId}</div>;
+                }} />
+                <Route
+                  exact
+                  path={match.path}
+                  render={() => <h3>Please select a topic.</h3>}
+                  // children={() => <h3>Please select a topic.</h3>}
+                />
+              </div>
+              </Router>
+        )
+    }
+}
+export default Topics;
